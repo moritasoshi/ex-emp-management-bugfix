@@ -66,11 +66,14 @@
 
 				<!-- ここから上を編集する必要はありません -->
 
-				<form action="" method="post">
+				<form th:action="@{/employee/find}" method="post">
 					<h4>従業員検索</h4>
 					<p>従業員名で曖昧検索することができます</p>
 					<input type="text" name="name">
 					<button>検索</button>
+					<span th:if="${fuzzySearchMessage}"
+						th:text="${fuzzySearchMessage}" class="error-messages"></span>
+
 				</form>
 				<!-- ここにモックのtable要素を貼り付けます -->
 

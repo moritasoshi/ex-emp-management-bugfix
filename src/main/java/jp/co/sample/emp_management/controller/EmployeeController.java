@@ -1,6 +1,7 @@
 package jp.co.sample.emp_management.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +27,7 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -53,14 +54,13 @@ public class EmployeeController {
 		return "employee/list";
 	}
 
-	
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を表示する
 	/////////////////////////////////////////////////////
 	/**
 	 * 従業員詳細画面を出力します.
 	 * 
-	 * @param id リクエストパラメータで送られてくる従業員ID
+	 * @param id    リクエストパラメータで送られてくる従業員ID
 	 * @param model モデル
 	 * @return 従業員詳細画面
 	 */
@@ -70,20 +70,45 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		return "employee/detail";
 	}
-	
+
+	/////////////////////////////////////////////////////
+	// ユースケース：従業員名で曖昧検索を行う
+	/////////////////////////////////////////////////////
+	@RequestMapping("/find")
+	public String find(String name, Model model) {
+
+		// 入力欄が空の場合は全件表示
+		if (Objects.isNull(name) || name.equals("")) {
+			return showList(model);
+		}
+
+		List<Employee> employeeList = employeeService.fuzzySearch(name);
+
+		if (!employeeList.isEmpty()) { // 検索がヒットした場合
+			model.addAttribute("employeeList", employeeList);
+			return "employee/list";
+		} else {// 検索結果が空の場合
+			String msg = "1件もありませんでした";
+			employeeList = employeeService.showList();
+			model.addAttribute("employeeList", employeeList);
+			model.addAttribute("fuzzySearchMessage", msg);
+			return "employee/list";
+		}
+
+	}
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を更新する
 	/////////////////////////////////////////////////////
 	/**
 	 * 従業員詳細(ここでは扶養人数のみ)を更新します.
 	 * 
-	 * @param form
-	 *            従業員情報用フォーム
+	 * @param form 従業員情報用フォーム
 	 * @return 従業員一覧画面へリダクレクト
 	 */
 	@RequestMapping("/update")
 	public String update(@Validated UpdateEmployeeForm form, BindingResult result, Model model) {
-		if(result.hasErrors()) {
+		if (result.hasErrors()) {
 			return showDetail(form.getId(), model);
 		}
 		Employee employee = new Employee();
