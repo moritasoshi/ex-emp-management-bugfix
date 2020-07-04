@@ -10,6 +10,8 @@
 	<link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
 
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://ajaxzip3.github.io/ajaxzip3.js" charset="UTF-8"></script>
+
 	<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
 	<script type="text/javascript" th:src="@{/js/common.js}"></script>
 	<script type="text/javascript" th:src="@{/js/validation.js}"></script>
@@ -107,12 +109,12 @@
 								<tr>
 									<th nowrap>郵便番号</th>
 									<td>
-										<input type="text" th:field="*{zipCode}">
+										<input type="text" th:field="*{zipCode}" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
 									</td>
 								</tr>
 								<tr>
 									<th nowrap>住所</th>
-									<td><input type="text" th:field="*{address}"></td>
+									<td><input type="text" th:field="*{address}" size="60"></td>
 								</tr>
 								<tr>
 									<th nowrap>電話番号</th>
@@ -120,7 +122,7 @@
 								</tr>
 								<tr>
 									<th nowrap>給料</th>
-									<td><input type="text" th:field="*{salary}"></td>
+									<td><input type="text" th:field="*{salary}">円</td>
 								</tr>
 								<tr>
 									<th nowrap>特性</th>
@@ -128,12 +130,9 @@
 								</tr>
 								<tr>
 									<th nowrap>扶養人数</th>
-									<td><label th:if="${#fields.hasErrors('dependentsCount')}"
-										th:errors="*{dependentsCount}" class="error-messages">
-											扶養人数を入力してください </label> 
-										<label class="control-label"
-										style="color: red" for="dependentsCount"></label>
-										<input type="text" th:field="*{dependentsCount}"></td>
+									<td>
+										<input type="text" th:field="*{dependentsCount}">人
+									</td>
 								</tr>
 							</table>
 							<button type="submit" class="btn btn-primary">更新</button>
@@ -151,4 +150,5 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="../../static/js/bootstrap.min.js"></script> -->
 </body>
+
 </html>
