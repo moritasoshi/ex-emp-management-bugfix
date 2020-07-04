@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jp.co.sample.emp_management.domain.Employee;
+import jp.co.sample.emp_management.form.InsertEmployeeForm;
 import jp.co.sample.emp_management.form.UpdateEmployeeForm;
 import jp.co.sample.emp_management.service.EmployeeService;
 
@@ -36,6 +37,11 @@ public class EmployeeController {
 	@ModelAttribute
 	public UpdateEmployeeForm setUpForm() {
 		return new UpdateEmployeeForm();
+	}
+	
+	@ModelAttribute
+	public InsertEmployeeForm setUpInsertEmployeeForm() {
+		return new InsertEmployeeForm();
 	}
 
 	/////////////////////////////////////////////////////
@@ -70,7 +76,36 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		return "employee/detail";
 	}
+	
+	/////////////////////////////////////////////////////
+	// ユースケース：従業員登録画面を表示する
+	/////////////////////////////////////////////////////
+	/**
+	 * 従業員登録画面を出力します.
+	 * 
+	 * @param model モデル
+	 * @return 従業員登録画面
+	 */
+	@RequestMapping("/showRegister")
+	public String showRegister(Model model) {
+		
+		return "employee/insert";
+	}
 
+	/////////////////////////////////////////////////////
+	// ユースケース：従業員を登録する
+	/////////////////////////////////////////////////////
+	/**
+	 * 従業員を登録
+	 * 
+	 * @param model モデル
+	 * @return 従業員一覧画面
+	 */
+	@RequestMapping("/register")
+	public String register(Model model) {
+		return "employee/list";
+	}
+	
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員名で曖昧検索を行う
 	/////////////////////////////////////////////////////
@@ -114,7 +149,6 @@ public class EmployeeController {
 		Employee employee = new Employee();
 		employee.setId(form.getIntId());
 		employee.setDependentsCount(form.getIntDependentsCount());
-		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
 }

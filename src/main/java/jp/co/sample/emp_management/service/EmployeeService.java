@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import jp.co.sample.emp_management.domain.Employee;
+import jp.co.sample.emp_management.form.InsertEmployeeForm;
 import jp.co.sample.emp_management.repository.EmployeeRepository;
 
 /**
@@ -46,15 +47,6 @@ public class EmployeeService {
 	}
 
 	/**
-	 * 従業員情報を更新します.
-	 * 
-	 * @param employee 更新した従業員情報
-	 */
-	public void update(Employee employee) {
-		employeeRepository.update(employee);
-	}
-
-	/**
 	 * 曖昧検索を行います
 	 * 
 	 * @param name 引数がnullの場合は例外が発生します
@@ -63,6 +55,18 @@ public class EmployeeService {
 	public List<Employee> fuzzySearch(String name) throws DataAccessException {
 		List<Employee> employeeList = employeeRepository.findByName(name);
 		return employeeList;
+	}
+	
+	/**
+	 * 従業員情報を登録します.
+	 * 
+	 * @param employee 更新した従業員情報
+	 */
+	public void insert(InsertEmployeeForm form) {
+		Employee employee = new Employee();
+		employee.setId(100);
+		
+//		employeeRepository.insert(employee);
 	}
 
 }

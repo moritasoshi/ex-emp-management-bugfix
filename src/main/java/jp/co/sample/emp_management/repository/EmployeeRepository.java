@@ -75,15 +75,6 @@ public class EmployeeRepository {
 	}
 
 	/**
-	 * 従業員情報を変更します.
-	 */
-	public void update(Employee employee) {
-		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
-		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
-		template.update(updateSql, param);
-	}
-
-	/**
 	 * 曖昧検索を行います
 	 */
 	public List<Employee> findByName(String name) {
@@ -92,4 +83,26 @@ public class EmployeeRepository {
 		List<Employee> employeeList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
 		return employeeList;
 	}
+	
+//	public Integer getIndex() {
+//	}
+	
+	/**
+	 * 従業員情報を変更します.
+	 */
+	public void update(Employee employee) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
+		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
+		template.update(updateSql, param);
+	}
+	
+	/**
+	 * 従業員情報を登録します
+	 */
+	public void insert(Employee employee) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
+		String insertSql = "INSERT into employees VALUES(:id,:name,:image,:gender,:hireDate,:mailAddress,:zipCode,:address,:telephone,:salary,:characteristics,:dependentsCount)";
+		template.update(insertSql, param);
+	}
+
 }
