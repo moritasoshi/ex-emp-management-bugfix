@@ -3,7 +3,7 @@ $(function() {
 	$.extend($.validator.messages, {
 		required: '*入力必須です',
 		email: '*正しいメールアドレスの形式で入力して下さい',
-		zipCode: '*正しい郵便番号の形式で（000-0000）入力してください',
+		zipCode: '*正しい郵便番号の形式（000-0000）で入力してください',
 		phone: '*正しい電話番号の形式（000-0000-0000）で入力してください',
 		onlyNum: '*正しい数値を入力してください'
 	});
@@ -58,7 +58,9 @@ $(function() {
 
 			//エラーメッセージ出力箇所調整
 			errorPlacement: function(error, element) {
-				if (element.is(':radio')) {
+				error.addClass('error-messages'); // エラーメッセージ用のクラスを追加
+
+				if (element.is('input:radio')) {
 					error.appendTo(element.parent());
 				} else {
 					error.insertAfter(element);
