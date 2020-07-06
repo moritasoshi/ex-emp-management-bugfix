@@ -56,6 +56,19 @@ public class EmployeeRepository {
 
 		return developmentList;
 	}
+	/**
+	 * 従業員一覧情報を入社日順で取得します.
+	 * 
+	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
+	 */
+	public Integer findId() {
+		String sql = "SELECT COUNT(*) FROM employees;";
+		
+		SqlParameterSource param = new MapSqlParameterSource();
+		Integer count = template.queryForObject(sql, param, Integer.class);
+		
+		return count;
+	}
 
 	/**
 	 * 主キーから従業員情報を取得します.

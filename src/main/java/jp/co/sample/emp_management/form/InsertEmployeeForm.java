@@ -8,8 +8,6 @@ public class InsertEmployeeForm {
 	/** id */
 	/** 従業員名 */
 	private String name;
-	/** 画像 */
-	private String image;
 	/** 性別 */
 	private String gender;
 	/** 入社日 */
@@ -27,11 +25,11 @@ public class InsertEmployeeForm {
 	/** 電話番号 */
 	private String telephone;
 	/** 給料 */
-	private String salary;
+	private Integer salary;
 	/** 特性 */
 	private String characteristics;
 	/** 扶養人数 */
-	private String dependentsCount;
+	private Integer dependentsCount;
 
 	public String getName() {
 		return name;
@@ -39,14 +37,6 @@ public class InsertEmployeeForm {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	public String getGender() {
@@ -113,11 +103,11 @@ public class InsertEmployeeForm {
 		this.telephone = telephone;
 	}
 
-	public String getSalary() {
+	public Integer getSalary() {
 		return salary;
 	}
 
-	public void setSalary(String salary) {
+	public void setSalary(Integer salary) {
 		this.salary = salary;
 	}
 
@@ -129,11 +119,11 @@ public class InsertEmployeeForm {
 		this.characteristics = characteristics;
 	}
 
-	public String getDependentsCount() {
+	public Integer getDependentsCount() {
 		return dependentsCount;
 	}
 
-	public void setDependentsCount(String dependentsCount) {
+	public void setDependentsCount(Integer dependentsCount) {
 		this.dependentsCount = dependentsCount;
 	}
 

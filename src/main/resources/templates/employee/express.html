@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>express.html</title>
+  </head>
+  <body>
+  	<div th:object="${application}">
+      画像は<img th:src="*{gorira}"/>です
+  	</div>
+  </body>
+</html>

@@ -72,7 +72,7 @@
 					<!-- ここにモックのform要素を貼り付けます -->
 
 					<form method="post" action="list.html" id="register-form" th:action="@{/employee/register}"
-						th:object="${insertEmployeeForm}">
+						th:object="${insertEmployeeForm}" enctype="multipart/form-data">
 						<fieldset>
 							<legend>従業員登録</legend>
 							<table class="table table-striped">
@@ -82,7 +82,7 @@
 								</tr>
 								<tr>
 									<th nowrap>写真</th>
-									<td></td>
+									<td><input type="file" name="image" accept="image/png, image/jpeg"></td>
 								</tr>
 								<tr>
 									<th nowrap>性別</th>
@@ -109,7 +109,8 @@
 								<tr>
 									<th nowrap>郵便番号</th>
 									<td>
-										<input type="text" th:field="*{zipCode}" onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
+										<input type="text" th:field="*{zipCode}" size="10"
+											onKeyUp="AjaxZip3.zip2addr(this,'','address','address');">
 									</td>
 								</tr>
 								<tr>
@@ -118,11 +119,11 @@
 								</tr>
 								<tr>
 									<th nowrap>電話番号</th>
-									<td><input type="text" th:field="*{telephone}"></td>
+									<td><input type="text" size="15" th:field="*{telephone}"></td>
 								</tr>
 								<tr>
 									<th nowrap>給料</th>
-									<td><input type="text" th:field="*{salary}">円</td>
+									<td><input type="text" size="15" th:field="*{salary}">円</td>
 								</tr>
 								<tr>
 									<th nowrap>特性</th>
@@ -131,7 +132,7 @@
 								<tr>
 									<th nowrap>扶養人数</th>
 									<td>
-										<input type="text" th:field="*{dependentsCount}">人
+										<input type="text" size="5" th:field="*{dependentsCount}">人
 									</td>
 								</tr>
 							</table>

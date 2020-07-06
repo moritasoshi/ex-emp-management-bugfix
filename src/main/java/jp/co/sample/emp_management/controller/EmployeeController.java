@@ -1,8 +1,19 @@
 package jp.co.sample.emp_management.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import jp.co.sample.emp_management.domain.Employee;
 import jp.co.sample.emp_management.form.InsertEmployeeForm;
@@ -29,6 +41,9 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 
+	@Autowired
+	private ServletContext application;
+
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -38,7 +53,7 @@ public class EmployeeController {
 	public UpdateEmployeeForm setUpForm() {
 		return new UpdateEmployeeForm();
 	}
-	
+
 	@ModelAttribute
 	public InsertEmployeeForm setUpInsertEmployeeForm() {
 		return new InsertEmployeeForm();
@@ -76,7 +91,7 @@ public class EmployeeController {
 		model.addAttribute("employee", employee);
 		return "employee/detail";
 	}
-	
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員登録画面を表示する
 	/////////////////////////////////////////////////////
@@ -88,7 +103,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/showRegister")
 	public String showRegister(Model model) {
-		
+
 		return "employee/insert";
 	}
 
@@ -102,10 +117,51 @@ public class EmployeeController {
 	 * @return 従業員一覧画面
 	 */
 	@RequestMapping("/register")
-	public String register(Model model) {
-		return "employee/list";
+	public String register(InsertEmployeeForm form, MultipartFile image, Model model) {
+		Employee employee = new Employee();
+		
+		BeanUtils.copyProperties(form, employee);
+		// img
+		employee.setImage(image.getOriginalFilename());
+		// id
+		employee.setId(employeeService.findId()+1);
+		// hire_date
+		String year = form.getHireYear();
+		String month = form.getHireMonth();
+		String day = form.getHireDay();
+		try {
+            String strDate = year + "/" + month + "/" + day;
+            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = sdFormat.parse(strDate);
+            employee.setHireDate(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+		// 画像処理
+		String fileName = image.getOriginalFilename();
+		
+		employeeService.insert(employee);
+		try {
+			// 保存先を定義
+			String uploadPath = "src/main/resources/static/img/";
+			byte[] bytes = image.getBytes();
+
+			// 指定ファイルへ読み込みファイルを書き込み
+			BufferedOutputStream stream = new BufferedOutputStream(
+					new FileOutputStream(new File(uploadPath + fileName)));
+			stream.write(bytes);
+			stream.close();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return "employee/express";
+
 	}
-	
+
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員名で曖昧検索を行う
 	/////////////////////////////////////////////////////

@@ -33,6 +33,10 @@ public class EmployeeService {
 		List<Employee> employeeList = employeeRepository.findAll();
 		return employeeList;
 	}
+	
+	public Integer findId() {
+		return employeeRepository.findId();
+	}
 
 	/**
 	 * 従業員情報を取得します.
@@ -62,11 +66,8 @@ public class EmployeeService {
 	 * 
 	 * @param employee 更新した従業員情報
 	 */
-	public void insert(InsertEmployeeForm form) {
-		Employee employee = new Employee();
-		employee.setId(100);
-		
-//		employeeRepository.insert(employee);
+	public void insert(Employee employee) {
+		employeeRepository.insert(employee);
 	}
 
 }
