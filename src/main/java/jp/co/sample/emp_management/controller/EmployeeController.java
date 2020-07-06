@@ -41,9 +41,6 @@ public class EmployeeController {
 	@Autowired
 	private EmployeeService employeeService;
 
-	@Autowired
-	private ServletContext application;
-
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
 	 * 
@@ -72,6 +69,7 @@ public class EmployeeController {
 	public String showList(Model model) {
 		List<Employee> employeeList = employeeService.showList();
 		model.addAttribute("employeeList", employeeList);
+		
 		return "employee/list";
 	}
 
@@ -117,7 +115,7 @@ public class EmployeeController {
 	 * @return 従業員一覧画面
 	 */
 	@RequestMapping("/register")
-	public String register(InsertEmployeeForm form, MultipartFile image, Model model) {
+	public synchronized String register(InsertEmployeeForm form, MultipartFile image, Model model) {
 		Employee employee = new Employee();
 		
 		BeanUtils.copyProperties(form, employee);

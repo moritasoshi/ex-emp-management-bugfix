@@ -17,7 +17,7 @@ $(function() {
 			return this.optional(element) || /^\d{3}-\d{4}-\d{4}$/.test(value);
 		},
 		onlyNum: function(value, element) {
-			return this.optional(element) || /^\d+?/.test(value);
+			return this.optional(element) || /^\d+$/.test(value);
 		}
 	};
 

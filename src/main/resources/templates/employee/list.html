@@ -84,10 +84,14 @@
 				<form th:action="@{/employee/find}" method="post">
 					<h4>従業員検索</h4>
 					<p>従業員名で曖昧検索することができます</p>
-					<input type="text" name="name">
+					<input type="text" name="name" autocomplete="on" list="nameList">
 					<button>検索</button>
 					<span th:if="${fuzzySearchMessage}" th:text="${existingMailAddress}" class="error-messages"></span>
 
+					<!-- オートコンプリート用 -->
+					<datalist id="nameList">
+						<option th:each="emp : ${employeeList}" th:value="${emp.name}">
+					</datalist><br>
 				</form>
 				<!-- ここにモックのtable要素を貼り付けます -->
 				<span id="prev">＜</span>　<span id="page"></span>　<span id="next">＞</span>
