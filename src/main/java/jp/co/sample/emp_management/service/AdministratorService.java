@@ -62,14 +62,15 @@ public class AdministratorService {
 	public Administrator login(String mailAddress, String password) {
 		// メールアドレスで管理者を取得
 		Administrator administrator = administratorRepository.findByMailAddress(mailAddress);
-		
+		System.out.println("ここです");
 		// ハッシュ化されたDBのパスワードと入力値が一致するか確認
 		if (passwordEncoder.matches(password, administrator.getPassword())) {
-            System.out.println("一致したよ");
-            administrator.setPassword(password); // 入力されたパスワードに変更して管理者を返す
-            return administrator;
-        } else {
-        	return null;
-        }
+			System.out.println("一致したよ");
+			administrator.setPassword(password); // 入力されたパスワードに変更して管理者を返す
+			return administrator;
+		} else {
+			return null;
+		}
 	}
+
 }

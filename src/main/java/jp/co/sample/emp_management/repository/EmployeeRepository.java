@@ -63,7 +63,6 @@ public class EmployeeRepository {
 	 */
 	public Integer findId() {
 		String sql = "SELECT COUNT(*) FROM employees;";
-		
 		SqlParameterSource param = new MapSqlParameterSource();
 		Integer count = template.queryForObject(sql, param, Integer.class);
 		
