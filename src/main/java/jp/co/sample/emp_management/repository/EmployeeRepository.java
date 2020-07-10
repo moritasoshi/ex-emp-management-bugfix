@@ -96,9 +96,6 @@ public class EmployeeRepository {
 		return employeeList;
 	}
 	
-//	public Integer getIndex() {
-//	}
-	
 	/**
 	 * 従業員情報を変更します.
 	 */

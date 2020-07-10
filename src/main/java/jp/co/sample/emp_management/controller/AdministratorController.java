@@ -77,12 +77,12 @@ public class AdministratorController {
 			return "administrator/insert";
 		}
 		// 確認用パスワードと一致していないときは登録画面に戻る
-		if(!form.getPassword().equals(form.getValidationPassword())) {
+		if (!form.getPassword().equals(form.getValidationPassword())) {
 			model.addAttribute("insertAdministratorForm", form);
 			model.addAttribute("notMatch", "確認用パスワードと一致していません");
 			return "administrator/insert";
 		}
-			
+
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
@@ -118,13 +118,7 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@RequestMapping("/login")
-	public String login(LoginForm form, BindingResult result, Model model) {
-		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
-		if (administrator == null) {
-			model.addAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
-			return toLogin();
-		}
-		session.setAttribute("administratorName", administrator.getName());
+	public String login() {
 		return "forward:/employee/showList";
 	}
 

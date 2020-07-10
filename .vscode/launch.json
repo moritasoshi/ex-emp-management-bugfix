@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-ExEmpManageAnswerApplication<ex-crm-answer>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "jp.co.sample.emp_management.ExEmpManageAnswerApplication",
+      "projectName": "ex-crm-answer",
+      "args": ""
+    }
+  ]
+}
