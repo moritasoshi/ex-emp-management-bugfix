@@ -11,8 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.ServletContext;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -69,7 +67,7 @@ public class EmployeeController {
 	public String showList(Model model) {
 		List<Employee> employeeList = employeeService.showList();
 		model.addAttribute("employeeList", employeeList);
-		
+
 		return "employee/list";
 	}
 
@@ -117,28 +115,28 @@ public class EmployeeController {
 	@RequestMapping("/register")
 	public synchronized String register(InsertEmployeeForm form, MultipartFile image, Model model) {
 		Employee employee = new Employee();
-		
+
 		BeanUtils.copyProperties(form, employee);
 		// img
 		employee.setImage(image.getOriginalFilename());
 		// id
-		employee.setId(employeeService.findId()+1);
+		employee.setId(employeeService.findId() + 1);
 		// hire_date
 		String year = form.getHireYear();
 		String month = form.getHireMonth();
 		String day = form.getHireDay();
 		try {
-            String strDate = year + "/" + month + "/" + day;
-            SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
-            Date date = sdFormat.parse(strDate);
-            employee.setHireDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+			String strDate = year + "/" + month + "/" + day;
+			SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd");
+			Date date = sdFormat.parse(strDate);
+			employee.setHireDate(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 
 		// 画像処理
 		String fileName = image.getOriginalFilename();
-		
+
 		employeeService.insert(employee);
 		try {
 			// 保存先を定義
@@ -146,8 +144,7 @@ public class EmployeeController {
 			byte[] bytes = image.getBytes();
 
 			// 指定ファイルへ読み込みファイルを書き込み
-			BufferedOutputStream stream = new BufferedOutputStream(
-					new FileOutputStream(new File(uploadPath + fileName)));
+			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(uploadPath + fileName)));
 			stream.write(bytes);
 			stream.close();
 		} catch (UnsupportedEncodingException e) {
@@ -155,7 +152,7 @@ public class EmployeeController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		return "employee/express";
 
 	}

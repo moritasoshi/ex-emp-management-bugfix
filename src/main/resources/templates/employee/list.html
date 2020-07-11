@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="../../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
 	<link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/autocomplete.js"></script>
 	<script>
 		$(function () {
 			var page = 0;
@@ -84,14 +85,12 @@
 				<form th:action="@{/employee/find}" method="post">
 					<h4>従業員検索</h4>
 					<p>従業員名で曖昧検索することができます</p>
-					<input type="text" name="name" autocomplete="on" list="nameList">
-					<button>検索</button>
+					<input type="text" name="name" autocomplete="on" id="name" list="nameList">
+					<!-- オートコンプリート用 -->
+					<datalist id="nameList"></datalist>
+					<button id="auto">検索</button>
 					<span th:if="${fuzzySearchMessage}" th:text="${existingMailAddress}" class="error-messages"></span>
 
-					<!-- オートコンプリート用 -->
-					<datalist id="nameList">
-						<option th:each="emp : ${employeeList}" th:value="${emp.name}">
-					</datalist><br>
 				</form>
 				<!-- ここにモックのtable要素を貼り付けます -->
 				<span id="prev">＜</span>　<span id="page"></span>　<span id="next">＞</span>
